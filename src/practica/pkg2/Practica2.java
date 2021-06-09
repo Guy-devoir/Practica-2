@@ -1,6 +1,11 @@
 package practica.pkg2;
 
+import java.io.BufferedReader;
 import java.io.Console;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -12,12 +17,17 @@ import java.util.Scanner;
 public class Practica2 {
 static Scanner sc = new Scanner(System.in);
 
-
 //el arreglo de los usuarios
 static Usuario[] users = new Usuario[5];
 static Alumno[] alumni = new Alumno[100];
 static Profesor[] profs = new Profesor[20];
 static Curso[] cursos = new Curso[15];
+/*
+*Por alguna razón el scanner llega a fallar, así que recomiendo, usar scaneres locales
+*de otra forma podrían encontrarse con un error
+*Mejor si usan un nuevo scanner para
+*/
+
     public static void main(String[] args) {
         Console c = System.console();
         String user;
@@ -57,7 +67,13 @@ aux.setNombre("desu");
                         + "\n8)Cerrar Sesión");
                 switch (opc = sc.nextInt()) {
                     case 1:
+                        try{
+                        reader_alumni();
+                        }catch(IOException e){
+                            System.out.println("Proceso de carga de alumnas fallida");
+                        }
                         break;
+
                     case 2:
                         break;
                     case 3:
@@ -140,4 +156,20 @@ aux.setNombre("desu");
             System.out.println("Usuario no valido");
             System.exit(0);
         }}
+ 
+    //Todabía es muy primitivo... cargar alumnos
+    private static void reader_alumni() throws IOException {
+        try{
+            String linea = "";
+        BufferedReader br = new BufferedReader(new FileReader("a.csv"));
+        String headerLine = "";
+        headerLine = br.readLine();
+        while((linea = br.readLine()) != null){
+        String[] data = linea.split(",");
+        //5 valores
+        }
+        }catch(FileNotFoundException e){
+            System.out.println("Error: Carga del archivo fallida");
+        }
+    }
 }

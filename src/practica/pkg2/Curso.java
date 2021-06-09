@@ -1,9 +1,9 @@
 package practica.pkg2;
 
-/**
- *
- * @author Dell
- */
+
+
 class Curso {
-    
+    int id_clase;
+    int codigo;
+    String nombre;
 }
