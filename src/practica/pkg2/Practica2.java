@@ -16,6 +16,18 @@ import java.util.Scanner;
  */
 public class Practica2 {
 static Scanner sc = new Scanner(System.in);
+// Constantes de color agregar al final de un System.out.println("hola" + \u001B[30m);
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
+// Constante de color especial para volver a dejar todo con normalidad
+    public static final String ANSI_RESET = "\u001B[0m";
+    //Para usar los colores System.out.println(ANSI_RED + "Texto de color rojo" + ANSI_RESET);
 
 //el arreglo de los usuarios
 static Usuario[] users = new Usuario[5];
@@ -56,7 +68,7 @@ aux.setNombre("desu");
         do {
             try {
                 int opc;
-                System.out.println("Menu principal"
+                System.out.println(ANSI_YELLOW +"Menu principal"
                         + "\n1)Cargar Alumnos"
                         + "\n2)Cargar Profesores"
                         + "\n3)Cargar Cursos"
@@ -64,7 +76,7 @@ aux.setNombre("desu");
                         + "\n5)Asignar profesores"
                         + "\n6)Cargar Notas"
                         + "\n7)Crear usuario"
-                        + "\n8)Cerrar Sesión");
+                        + "\n8)Cerrar Sesión"+ANSI_RESET);
                 switch (opc = sc.nextInt()) {
                     case 1:
                         try {
@@ -208,16 +220,18 @@ aux.setNombre("desu");
     //menu de reportes
     private static void menu_reporte(){
     boolean menu = true;
+
     Scanner sc1 = new Scanner(System.in);
     int opc;
     while(menu = true){
-        System.out.println("Menu de reportes"
+        System.out.println(ANSI_RED+"Menu de reportes"
                 + "\n1)Generar Reportes"
-                + "\n2)Cerrar Sesión");
+                + "\n2)Cerrar Sesión" +ANSI_RESET);
         
         try{
         switch(opc = sc1.nextInt()){
             case 1:
+                sub_menureporte();
                 break;
             case 2:
                 Nueva_sesion();
@@ -231,6 +245,55 @@ aux.setNombre("desu");
         }
         
     }
+    }
+
+
+    private static void sub_menureporte(){
+        Scanner sc1 = new Scanner(System.in);
+        int opc=0;
+        System.out.println(ANSI_BLUE+"Menu de reportes"
+                + "\n1) Reporte de alumnos"
+                + "\n2) Reporte de asignacion de alumnos"
+                + "\n3) Reporte de asignacion de profesores"
+                + "\n4) Reporte general de cursos"
+                + "\n5) Reporte de un curso en especifico"
+                + "\n6) Reporte de Top de 5 mejores alumnos de un curso \n");
+        System.out.println("Ingresar un numero de la lista para seleccionar una opcion" +ANSI_RESET);
+
+        opc = sc1.nextInt();
+        try {
+            switch (opc){
+                case 1:
+//                    Reporte_de_alumnos();
+                    System.out.println(ANSI_YELLOW + "Se ha realizado el reporte de los alumnos por favor revisa \n"+ANSI_RESET);
+                break;
+                case 2:
+//                    Reporte_de_asignacion_de_alumnos();
+                    System.out.println(ANSI_YELLOW + "Se ha realizado el reporte de la Asignacionde los alumnos por favor revisa \n"+ANSI_RESET);
+                    break;
+                case 3:
+//                    Reporte_de_asignacion_de_profesores();
+                    System.out.println(ANSI_YELLOW + "Se ha realizado el reporte de la Asignacion de los profesores por favor revisa \n"+ANSI_RESET);
+                    break;
+                case 4:
+//                    Reporte_general_de_cursos();
+                    System.out.println(ANSI_YELLOW + "Se ha realizado el reporte General de los cursos por favor revisa \n"+ANSI_RESET);
+                    break;
+                case 5:
+//                    Reporte_de_un_curso_en_especifico();
+                    // Aqui se debera de realizar un reporte especial con seleccion del curso
+                    break;
+                case 6:
+//                    Reporte_de_Top_de_5_mejores_alumnos_de_un_curso();
+                    // Aqui se debera de realizar un reporte especial con seleccion del curso para despuess seleccionar el top de 5 mas
+                    break;
+                default:
+                    menu_reporte();
+            }
+        }catch (Exception e){
+            System.out.println("Entrada no valida debes de ingresar un entero");
+        }
+
     }
 
     private static Profesor[] reader_profs() throws IOException {
