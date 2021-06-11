@@ -56,7 +56,7 @@ aux.setNombre("desu");
         do {
             try {
                 int opc;
-                System.err.println("Menu principal"
+                System.out.println("Menu principal"
                         + "\n1)Cargar Alumnos"
                         + "\n2)Cargar Profesores"
                         + "\n3)Cargar Cursos"
@@ -67,15 +67,19 @@ aux.setNombre("desu");
                         + "\n8)Cerrar Sesión");
                 switch (opc = sc.nextInt()) {
                     case 1:
-                        try{
-                        reader_alumni();
-                        }catch(IOException e){
-                            System.out.println("Proceso de carga de alumnas fallida");
-                        }
-                        break;
-
+                        try {
+                        alumni = reader_alumni();
+                    } catch (IOException e) {
+                        System.out.println("Proceso de carga de alumnos fallida");
+                    }
+                    break;
                     case 2:
-                        break;
+                        try {
+                        profs = reader_profs();
+                    } catch (IOException e) {
+                        System.out.println("Proceso de carga de profesores fallida");
+                    }
+                    break;
                     case 3:
                         break;
                     case 4:
@@ -138,38 +142,137 @@ aux.setNombre("desu");
                 Menu();
             }
             if (user.equals(users[0].getNombre()) && pass.equals(users[0].getCont())) {
-                Menu();
+                menu_reporte();
             }
             if (user.equals(users[1].getNombre()) && pass.equals(users[1].getCont())) {
-                Menu();
+                menu_reporte();
             }
             if (user.equals(users[2].getNombre()) && pass.equals(users[2].getCont())) {
-                Menu();
+                menu_reporte();
             }
             if (user.equals(users[3].getNombre()) && pass.equals(users[3].getCont())) {
-                Menu();
+                menu_reporte();
             }
             if (user.equals(users[4].getNombre()) && pass.equals(users[4].getCont())) {
-                Menu();
+                menu_reporte();
             }
         } catch (Exception e) {
             System.out.println("Usuario no valido");
             System.exit(0);
-        }}
- 
+        }
+    }
+
     //Todabía es muy primitivo... cargar alumnos
-    private static void reader_alumni() throws IOException {
+    private static Alumno[] reader_alumni() throws IOException {
+        System.out.println("Introduzca la ruta del archivo");
+        Alumno[] aux = null;
+        String linea = "";
+        //la dirección del archivo
+        //https://www.youtube.com/watch?v=zKDmzKaAQro
+        File nuevo = new File(sc.nextLine());
+        try {
+            FileReader archivo = new FileReader(nuevo);
+            BufferedReader buffer = new BufferedReader(archivo);
+            String temporal = "";
+            while (linea != null) {
+                linea = buffer.readLine();
+                if (linea != null) {
+                    //se almacena todo en un String que contendra los datos crudos
+                    temporal += linea;
+                }
+                //se almacena ahora todo eso un vector String que tendra cada fila separada
+                String[] filas = temporal.split("\n");
+                //el aux tendra tantos objetos como elementos del arreglo de filas
+                aux = new Alumno[filas.length];
+
+                for (int i = 0; i < filas.length; i++) {
+                    /*
+                    La posición "i" del arreglo se llenará con su respectivos
+                    valores[], valores en posición "i"
+                    */
+                    String[] valores = filas[i].split(",");
+                    aux[i].setId_est(Integer.valueOf(valores[0]));
+                    aux[i].setCarnet(Integer.valueOf(valores[1]));
+                    aux[i].setNombre(valores[2]);
+                    aux[i].setCumple(valores[3]);
+                    aux[i].setGenero(valores[4]);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error al leer el archivo");
+            System.out.println(e.getMessage());
+        }
+        return aux;
+    }
+    
+    //menu de reportes
+    private static void menu_reporte(){
+    boolean menu = true;
+    Scanner sc1 = new Scanner(System.in);
+    int opc;
+    while(menu = true){
+        System.out.println("Menu de reportes"
+                + "\n1)Generar Reportes"
+                + "\n2)Cerrar Sesión");
+        
         try{
-            String linea = "";
-        BufferedReader br = new BufferedReader(new FileReader("a.csv"));
-        String headerLine = "";
-        headerLine = br.readLine();
-        while((linea = br.readLine()) != null){
-        String[] data = linea.split(",");
-        //5 valores
+        switch(opc = sc1.nextInt()){
+            case 1:
+                break;
+            case 2:
+                Nueva_sesion();
+                break;
+            default:
+                System.out.println("Seleccione una opción");
+                break;
         }
-        }catch(FileNotFoundException e){
-            System.out.println("Error: Carga del archivo fallida");
+        }catch(Exception e){
+            System.out.println("Entrada no valida");
         }
+        
+    }
+    }
+
+    private static Profesor[] reader_profs() throws IOException {
+        System.out.println("Introduzca la ruta del archivo");
+        Profesor[] aux = null;
+        String linea = "";
+        //la dirección del archivo
+        //https://www.youtube.com/watch?v=zKDmzKaAQro
+        File nuevo = new File(sc.nextLine());
+        try {
+            FileReader archivo = new FileReader(nuevo);
+            BufferedReader buffer = new BufferedReader(archivo);
+            String temporal = "";
+            while (linea != null) {
+                linea = buffer.readLine();
+                if (linea != null) {
+                    //se almacena todo en un String que contendra los datos crudos
+                    temporal += linea;
+                }
+                //se almacena ahora todo eso un vector String que tendra cada fila separada
+                String[] filas = temporal.split("\n");
+                //el aux tendra tantos objetos como elementos del arreglo de filas
+                aux = new Profesor[filas.length];
+
+                for (int i = 0; i < filas.length; i++) {
+                    /*
+                    La posición "i" del arreglo se llenará con su respectivos
+                    valores[], valores en posición "i"
+                    */
+                    String[] valores = filas[i].split(",");
+                    aux[i].setId_est(Integer.valueOf(valores[0]));
+                    aux[i].setCarnet(Integer.valueOf(valores[1]));
+                    aux[i].setNombre(valores[2]);
+                    aux[i].setCumple(valores[3]);
+                    aux[i].setContrato(valores[4]);
+                    aux[i].setGenero(valores[5]);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error al leer el archivo");
+            System.out.println(e.getMessage());
+        }
+        return aux;
     }
 }
