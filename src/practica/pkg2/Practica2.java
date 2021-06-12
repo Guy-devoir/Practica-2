@@ -185,8 +185,7 @@ aux.setNombre("desu");
 
             String filas[] = linea.split("\n"); //metemos las lineas de los archivos en un array
             int filasAlumno = filas.length; //Aquí para verificar cuantos pokemons estamos ingresando
-            String columnas[] = linea.split(","); //metemos todos los campos de las lineas en un array
-            int columnasAlumno = columnas.length; //Verificamos cuantas columnas tiene el archivo
+            String columnas[];
 
             for (int i = 0; i < filasAlumno; i++) { //con este for pasamos los parámetros a al constructor de la clase Alumno
                 columnas = filas[i].split(",");
