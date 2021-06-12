@@ -1,11 +1,6 @@
 package practica.pkg2;
 
-import java.io.BufferedReader;
-import java.io.Console;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 /**
@@ -276,7 +271,7 @@ aux.setNombre("desu");
                     System.out.println(ANSI_YELLOW + "Se ha realizado el reporte de la Asignacion de los profesores por favor revisa \n"+ANSI_RESET);
                     break;
                 case 4:
-//                    Reporte_general_de_cursos();
+                    Reporte_general_de_cursos();
                     System.out.println(ANSI_YELLOW + "Se ha realizado el reporte General de los cursos por favor revisa \n"+ANSI_RESET);
                     break;
                 case 5:
@@ -294,6 +289,66 @@ aux.setNombre("desu");
             System.out.println("Entrada no valida debes de ingresar un entero");
         }
 
+    }
+
+    public static void Reporte_general_de_cursos(){
+//     modificar para los valores de ingreso de la tabla
+        //matriz de prueba
+        String [][] mat ={{"00001","Matematicas","10"},{"00002","Ciencias naturales","20"}};
+
+            String tabla = "<html><HEAD>\n" +
+                    "<title>" +
+                    "Reporte general de cursos" +
+                    "</title>" +
+                    "</HEAD>"
+                    +"<body background='fondos_de_reportes\\fondo1.jpg'>"
+                    +"<center>"
+                    +"<h1>Reporte_general_de_cursos</h1>"
+                    +"<table border='1' bgcolor='DeepSkyBlue'>"
+                    +"<tr>" +
+                    "<td>Codigo</td>" +
+                    "<td>Nombre del curso</td>" +
+                    "<td>Cantidad de alumnos</td>" +
+                    "</tr>";
+            for (int i = 0; i < mat.length; i++) {
+                String row = "<tr>";
+                for (int j = 0; j < mat[0].length; j++) {
+                    row += "<td>" + mat[i][j] + "</td>";
+                }
+                row += "</tr>";
+                tabla += row;
+            }
+            tabla += "</table></center></body></html>";
+
+            createFile("reportegeneral.html",tabla);
+
+    }
+
+    //crea el archivo en disco, recibe como parámetro la lista de estudiantes
+    public static void createFile(String pathname,String html) {
+        FileWriter flwriter = null;
+        try {
+            //crea el flujo para escribir en el archivo
+            flwriter = new FileWriter(pathname);
+            //crea un buffer o flujo intermedio antes de escribir directamente en el archivo
+            BufferedWriter bfwriter = new BufferedWriter(flwriter);
+
+        //Espacio para agregar codigo html por almacenado en una variable
+                bfwriter.write(html);
+
+            bfwriter.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (flwriter != null) {
+                try {//cierra el flujo principal
+                    flwriter.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
     private static Profesor[] reader_profs() throws IOException {
