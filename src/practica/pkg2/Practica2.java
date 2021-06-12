@@ -167,25 +167,21 @@ aux.setNombre("desu");
         Scanner sc1 = new Scanner(System.in);
         System.out.println("Introduzca la ruta del archivo");
         Alumno[] aux = null;
-        String linea = "";
         //la dirección del archivo
         //https://www.youtube.com/watch?v=zKDmzKaAQro
         File nuevo = new File(sc1.nextLine());
         try {
             FileReader archivo = new FileReader(nuevo);
             BufferedReader buffer = new BufferedReader(archivo);
-            String temporal = "";
+            String linea = buffer.readLine();
             while (linea != null) {
-                linea = buffer.readLine();
-                //se almacena todo en un String que contendra los datos crudos
-                temporal += linea;
 
                 //se almacena ahora todo eso un vector String que tendra cada fila separada
-                String[] filas = linea.split("\n");
+                String[] filas = linea.split(",");
                 //el aux tendra tantos objetos como elementos del arreglo de filas
                 aux = new Alumno[filas.length];
                 
-                for (int i = 1; i < filas.length; i++) {
+                for (int i = 1; linea != null && i < filas.length; i++) {
                     /*
                     La posición "i" del arreglo se llenará con su respectivos
                     valores[], valores en posición "i"
@@ -197,6 +193,7 @@ aux.setNombre("desu");
                     aux[i].setCumple(valores[3]);
                     aux[i].setGenero(valores[4]);
                 }
+                linea = buffer.readLine();
             }
         } catch (IOException e) {
             System.out.println("Error al leer el archivo");
