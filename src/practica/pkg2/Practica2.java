@@ -164,41 +164,46 @@ aux.setNombre("desu");
 
     //Todabía es muy primitivo... cargar alumnos
     private static Alumno[] reader_alumni() throws IOException {
-        Scanner sc1 = new Scanner(System.in);
-        System.out.println("Introduzca la ruta del archivo");
-        Alumno[] aux = null;
-        String linea = "";
+
+        //variables auxiliares
+        int id, carnet;
+        String nombre, cumple, genero;
         //la dirección del archivo
         //https://www.youtube.com/watch?v=zKDmzKaAQro
-        File nuevo = new File(sc1.nextLine());
-        try {
-            FileReader archivo = new FileReader(nuevo);
-            BufferedReader buffer = new BufferedReader(archivo);
-            String temporal = "";
-            while (linea != null) {
-                linea = buffer.readLine();
-                //se almacena todo en un String que contendra los datos crudos
-                temporal += linea;
+        Alumno[] aux = null;
 
-                //se almacena ahora todo eso un vector String que tendra cada fila separada
-                String[] filas = linea.split("\n");
-                //el aux tendra tantos objetos como elementos del arreglo de filas
-                aux = new Alumno[filas.length];
-                
-                for (int i = 1; i < filas.length; i++) {
-                    /*
-                    La posición "i" del arreglo se llenará con su respectivos
-                    valores[], valores en posición "i"
-                     */
-                    String[] valores = filas[i].split(",");
-                    aux[i].setId_est(Integer.valueOf(valores[0]));
-                    aux[i].setCarnet(Integer.valueOf(valores[1]));
-                    aux[i].setNombre(valores[2]);
-                    aux[i].setCumple(valores[3]);
-                    aux[i].setGenero(valores[4]);
-                }
+        try {
+            System.out.println("Introduzca la ruta del archivo: ");
+            File csv = new File(sc.nextLine());
+            Scanner reader = new Scanner(System.in); //lector para mi archivo
+            String linea = "";
+            reader.nextLine();//ignorar la primera linea del csv
+
+            while (reader.hasNextLine()) {
+                linea += reader.nextLine() + "\n";
             }
-        } catch (IOException e) {
+
+            String filas[] = linea.split("\n"); //metemos las lineas de los archivos en un array
+            int filasAlumno = filas.length; //Aquí para verificar cuantos pokemons estamos ingresando
+            String columnas[];
+
+            for (int i = 0; i < filasAlumno; i++) { //con este for pasamos los parámetros a al constructor de la clase Alumno
+                columnas = filas[i].split(",");
+
+                /*Aqui casteamos todos los valores strings a sus respectivos valores para poder realizar
+                las respectivas operaciones*/
+                id = Integer.parseInt(columnas[0]);
+                carnet = Integer.parseInt(columnas[1]);
+                nombre = columnas[2];
+                cumple = columnas[3];
+                genero = columnas[4];
+
+                //Aquí ya instanciamos todos objetos de mi clase Alumno
+                aux[i] = new Alumno(id, carnet, nombre, cumple, genero);
+
+            }
+
+        } catch (Exception e) {
             System.out.println("Error al leer el archivo");
             System.out.println(e.getMessage());
         }
