@@ -1,6 +1,8 @@
 package practica.pkg2;
 
 import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 /**
@@ -259,27 +261,23 @@ aux.setNombre("desu");
         try {
             switch (opc){
                 case 1:
-//                    Reporte_de_alumnos();
-                    System.out.println(ANSI_YELLOW + "Se ha realizado el reporte de los alumnos por favor revisa \n"+ANSI_RESET);
+                    Reporte_de_alumnos();
                 break;
                 case 2:
-//                    Reporte_de_asignacion_de_alumnos();
-                    System.out.println(ANSI_YELLOW + "Se ha realizado el reporte de la Asignacionde los alumnos por favor revisa \n"+ANSI_RESET);
+                    Reporte_de_asignacion_de_alumnos();
                     break;
                 case 3:
-//                    Reporte_de_asignacion_de_profesores();
-                    System.out.println(ANSI_YELLOW + "Se ha realizado el reporte de la Asignacion de los profesores por favor revisa \n"+ANSI_RESET);
+                    Reporte_de_asignacion_de_profesores();
                     break;
                 case 4:
                     Reporte_general_de_cursos();
-                    System.out.println(ANSI_YELLOW + "Se ha realizado el reporte General de los cursos por favor revisa \n"+ANSI_RESET);
                     break;
                 case 5:
-//                    Reporte_de_un_curso_en_especifico();
+                    Reporte_de_un_curso_en_especifico();
                     // Aqui se debera de realizar un reporte especial con seleccion del curso
                     break;
                 case 6:
-//                    Reporte_de_Top_de_5_mejores_alumnos_de_un_curso();
+                    Reporte_de_Top_de_5_mejores_alumnos_de_un_curso();
                     // Aqui se debera de realizar un reporte especial con seleccion del curso para despuess seleccionar el top de 5 mas
                     break;
                 default:
@@ -291,11 +289,141 @@ aux.setNombre("desu");
 
     }
 
+    public static String fecha_creacion_reporte(){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        String fecha;
+        fecha = dtf.format(LocalDateTime.now());
+        return fecha;
+    }
+
+
+    public static void Reporte_de_alumnos(){
+//     modificar para los valores de ingreso de la tabla
+        //matriz de prueba
+        String [][] mat ={{"00001","Jose Daniel","10","Masculino"},{"00002","Mariela Alverez","20","Femenino"}};
+        String fecha_reporte= "Fecha/Hora de Creacion del archivo: " + fecha_creacion_reporte();
+        String tabla = "<html><HEAD>\n" +
+                "<title>" +
+                "Reporte de alumnos" +
+                "</title>" +
+                "</HEAD>"
+                +"<body background='fondos_de_reportes\\fondo1.jpg'>"
+                +"<center>"
+                +"<h1>Reporte de alumnos</h1>"
+                +"<table border='1' bgcolor='DeepSkyBlue'>"
+                +"<tr>" +
+                "<td><strong>Carne</strong></td>" +
+                "<td><strong>Nombre</strong></td>" +
+                "<td><strong>Edad</strong></td>" +
+                "<td><strong>Genero</strong></td>" +
+                "</tr>";
+        for (int i = 0; i < mat.length; i++) {
+            String row = "<tr>";
+            for (int j = 0; j < mat[0].length; j++) {
+                row += "<td>" + mat[i][j] + "</td>";
+            }
+            row += "</tr>";
+            tabla += row;
+        }
+        tabla += "</table>" +
+                "<br>" +
+                "<strong>" +
+                fecha_reporte +
+                "</strong>" +
+                "</br>" +
+                "</center></body></html>";
+        createFile("Reporte de alumnos.html",tabla);
+        System.out.println(ANSI_YELLOW + "Se ha realizado el reporte de los alumnos por favor revisa \n"+ANSI_RESET);
+        System.out.println(fecha_reporte);
+    }
+
+    public static void Reporte_de_asignacion_de_alumnos(){
+//     modificar para los valores de ingreso de la tabla
+        //matriz de prueba
+        String [][] mat ={{"00001","Jose Daniel","10","Matematicas","01/02/2021"},{"00002","Mariela Alverez","20","Idioma Español","02/06/2021"}};
+        String fecha_reporte= "Fecha/Hora de Creacion del archivo: " + fecha_creacion_reporte();
+        String tabla = "<html><HEAD>\n" +
+                "<title>" +
+                "Reporte de alumnos" +
+                "</title>" +
+                "</HEAD>"
+                +"<body background='fondos_de_reportes\\fondo1.jpg'>"
+                +"<center>"
+                +"<h1>Reporte de asignacion de alumnos</h1>"
+                +"<table border='1' bgcolor='DeepSkyBlue'>"
+                +"<tr>" +
+                "<td><strong>Carne</strong></td>" +
+                "<td><strong>Nombre del Alumno</strong></td>" +
+                "<td><strong>Cadigo</strong></td>" +
+                "<td><strong>Nombre del Curso</strong></td>" +
+                "<td><strong>Fecha de asignacion al curso</strong></td>" +
+                "</tr>";
+        for (int i = 0; i < mat.length; i++) {
+            String row = "<tr>";
+            for (int j = 0; j < mat[0].length; j++) {
+                row += "<td>" + mat[i][j] + "</td>";
+            }
+            row += "</tr>";
+            tabla += row;
+        }
+        tabla += "</table>" +
+                "<br>" +
+                "<strong>" +
+                fecha_reporte +
+                "</strong>" +
+                "</br>" +
+                "</center></body></html>";
+        createFile("Reporte de asignacion de alumnos.html",tabla);
+        System.out.println(ANSI_YELLOW + "Se ha realizado el reporte de la Asignacionde los alumnos por favor revisa \n"+ANSI_RESET);
+        System.out.println(fecha_reporte);
+    }
+
+    public static void Reporte_de_asignacion_de_profesores(){
+//     modificar para los valores de ingreso de la tabla
+        //matriz de prueba
+        String [][] mat ={{"00011","Amilcar Montejo","1","Matematicas","01/02/2021"},{"00002","Mariela Alverez","2","Ciencias Naturales","02/06/2021"}};
+        String fecha_reporte= "Fecha/Hora de Creacion del archivo: " + fecha_creacion_reporte();
+        String tabla = "<html><HEAD>\n" +
+                "<title>" +
+                "Reporte de asignacion de profesores" +
+                "</title>" +
+                "</HEAD>"
+                +"<body background='fondos_de_reportes\\fondo1.jpg'>"
+                +"<center>"
+                +"<h1>Reporte de asignacion de profesores</h1>"
+                +"<table border='1' bgcolor='DeepSkyBlue'>"
+                +"<tr>" +
+                "<td><strong>Registro Personal del Profesor</strong></td>" +
+                "<td><strong>Nombre el Profesor</strong></td>" +
+                "<td><strong>Codigo curso</strong></td>" +
+                "<td><strong>Nombre curso</strong></td>" +
+                "<td><strong>Fecha de asignacion al curso</strong></td>" +
+                "</tr>";
+        for (int i = 0; i < mat.length; i++) {
+            String row = "<tr>";
+            for (int j = 0; j < mat[0].length; j++) {
+                row += "<td>" + mat[i][j] + "</td>";
+            }
+            row += "</tr>";
+            tabla += row;
+        }
+        tabla += "</table>" +
+                "<br>" +
+                "<strong>" +
+                fecha_reporte +
+                "</strong>" +
+                "</br>" +
+                "</center></body></html>";
+        createFile("Reporte de asignacion de profesores.html",tabla);
+        System.out.println(ANSI_YELLOW + "Se ha realizado el reporte de la Asignacion de los profesores por favor revisa \n"+ANSI_RESET);
+        System.out.println(fecha_reporte);
+    }
+
     public static void Reporte_general_de_cursos(){
 //     modificar para los valores de ingreso de la tabla
         //matriz de prueba
         String [][] mat ={{"00001","Matematicas","10"},{"00002","Ciencias naturales","20"}};
-
+        String fecha_reporte="Fecha/Hora de Creacion del archivo: "+ fecha_creacion_reporte();
             String tabla = "<html><HEAD>\n" +
                     "<title>" +
                     "Reporte general de cursos" +
@@ -303,12 +431,12 @@ aux.setNombre("desu");
                     "</HEAD>"
                     +"<body background='fondos_de_reportes\\fondo1.jpg'>"
                     +"<center>"
-                    +"<h1>Reporte_general_de_cursos</h1>"
+                    +"<h1>Reporte general de cursos</h1>"
                     +"<table border='1' bgcolor='DeepSkyBlue'>"
                     +"<tr>" +
-                    "<td>Codigo</td>" +
-                    "<td>Nombre del curso</td>" +
-                    "<td>Cantidad de alumnos</td>" +
+                    "<td><strong>Codigo<Strong></td>" +
+                    "<td><strong>Nombre del curso</strong></td>" +
+                    "<td><strong>Cantidad de alumnos</strong></td>" +
                     "</tr>";
             for (int i = 0; i < mat.length; i++) {
                 String row = "<tr>";
@@ -318,10 +446,99 @@ aux.setNombre("desu");
                 row += "</tr>";
                 tabla += row;
             }
-            tabla += "</table></center></body></html>";
+            tabla += "</table>" +
+                    "<br>" +
+                    "<strong>" +
+                    fecha_reporte +
+                    "</strong>" +
+                    "</br>" +
+                    "</center></body></html>";
+            createFile("Reporte general.html",tabla);
+        System.out.println(ANSI_YELLOW + "Se ha realizado el reporte General de los cursos por favor revisa \n"+ANSI_RESET);
+        System.out.println(fecha_reporte);
+    }
 
-            createFile("reportegeneral.html",tabla);
+    public static void Reporte_de_un_curso_en_especifico(){
+//     modificar para los valores de ingreso de la tabla
+        //matriz de prueba
+        String [][] mat ={{"00001","Jose Enrique","60","Reprovado"},
+                {"00002","David Gabriel","61","Aprovado"},
+                {"00003","Daniel Hernandez","60","Reprovado"}};
+        String fecha_reporte="Fecha/Hora de Creacion del archivo: "+ fecha_creacion_reporte();
+        String tabla = "<html><HEAD>\n" +
+                "<title>" +
+                "Reporte de un curso en especifico" +
+                "</title>" +
+                "</HEAD>"
+                +"<body background='fondos_de_reportes\\fondo1.jpg'>"
+                +"<center>"
+                +"<h1>Reporte de un curso en especifico</h1>"
+                +"<table border='1' bgcolor='DeepSkyBlue'>"
+                +"<tr>" +
+                "<td><strong>Carne<Strong></td>" +
+                "<td><strong>Nombre</strong></td>" +
+                "<td><strong>Nota</strong></td>" +
+                "<td><strong>Resultado</strong></td>" +
+                "</tr>";
+        for (int i = 0; i < mat.length; i++) {
+            String row = "<tr>";
+            for (int j = 0; j < mat[0].length; j++) {
+                row += "<td>" + mat[i][j] + "</td>";
+            }
+            row += "</tr>";
+            tabla += row;
+        }
+        tabla += "</table>" +
+                "<br>" +
+                "<strong>" +
+                fecha_reporte +
+                "</strong>" +
+                "</br>" +
+                "</center></body></html>";
+        createFile("Reporte de un curso en especifico.html",tabla);
+        System.out.println(ANSI_YELLOW + "Se ha realizado el reporte especifico del curso seleccionado por favor revisa \n"+ANSI_RESET);
+        System.out.println(fecha_reporte);
+    }
 
+    public static void Reporte_de_Top_de_5_mejores_alumnos_de_un_curso(){
+//     modificar para los valores de ingreso de la tabla
+        //matriz de prueba
+        String [][] mat ={{"00001","Jose Enrique","60"},
+                {"00002","David Gabriel","61"},
+                {"00003","Daniel Hernandez","60"}};
+        String fecha_reporte="Fecha/Hora de Creacion del archivo: "+ fecha_creacion_reporte();
+        String tabla = "<html><HEAD>\n" +
+                "<title>" +
+                "Reporte de Top de 5 mejores alumnos de un curso" +
+                "</title>" +
+                "</HEAD>"
+                +"<body background='fondos_de_reportes\\fondo1.jpg'>"
+                +"<center>"
+                +"<h1>Reporte de Top de 5 mejores alumnos de un curso</h1>"
+                +"<table border='1' bgcolor='DeepSkyBlue'>"
+                +"<tr>" +
+                "<td><strong>Carne<Strong></td>" +
+                "<td><strong>Nombre</strong></td>" +
+                "<td><strong>Nota</strong></td>" +
+                "</tr>";
+        for (int i = 0; i < mat.length; i++) {
+            String row = "<tr>";
+            for (int j = 0; j < mat[0].length; j++) {
+                row += "<td>" + mat[i][j] + "</td>";
+            }
+            row += "</tr>";
+            tabla += row;
+        }
+        tabla += "</table>" +
+                "<br>" +
+                "<strong>" +
+                fecha_reporte +
+                "</strong>" +
+                "</br>" +
+                "</center></body></html>";
+        createFile("Reporte de Top de 5 mejores alumnos de un curso.html",tabla);
+        System.out.println(ANSI_YELLOW + "Se ha realizado el reporte del Top de los mejores 5 del curso seleccionado por favor revisa \n"+ANSI_RESET);
+        System.out.println(fecha_reporte);
     }
 
     //crea el archivo en disco, recibe como parámetro la lista de estudiantes
