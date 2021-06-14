@@ -8,12 +8,13 @@ import java.util.Scanner;
 /**
  * @author Luciano Xiquín
  * @author Oscar Hernández
- * @author Brayan Mica
+ * @author Oscar Hernández
  * @author Fernando Mendoza
  */
 public class Practica2 {
-static Scanner sc = new Scanner(System.in);
-// Constantes de color agregar al final de un System.out.println("hola" + \u001B[30m);
+
+    static Scanner sc = new Scanner(System.in);
+    // Constantes de color agregar al final de un System.out.println("hola" + \u001B[30m);
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
     public static final String ANSI_GREEN = "\u001B[32m";
@@ -22,29 +23,23 @@ static Scanner sc = new Scanner(System.in);
     public static final String ANSI_PURPLE = "\u001B[35m";
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
-// Constante de color especial para volver a dejar todo con normalidad
+    // Constante de color especial para volver a dejar todo con normalidad
     public static final String ANSI_RESET = "\u001B[0m";
     //Para usar los colores System.out.println(ANSI_RED + "Texto de color rojo" + ANSI_RESET);
 
 //el arreglo de los usuarios
-static Usuario[] users = new Usuario[5];
-static Alumno[] alumni = new Alumno[100];
-static Profesor[] profs = new Profesor[20];
-static Curso[] cursos = new Curso[15];
-/*
+    static Usuario[] users = new Usuario[5];
+    static Alumno[] alumni = new Alumno[100];
+    static Profesor[] profs = new Profesor[20];
+    static Curso[] cursos = new Curso[15];
+
+    /*
 *Por alguna razón el scanner llega a fallar, así que recomiendo, usar scaneres locales
 *de otra forma podrían encontrarse con un error
 *Mejor si usan un nuevo scanner para
 */
 
     public static void main(String[] args) {
-
-/*Usuario aux = new Usuario();
-aux.setCont("Uno");
-aux.setNombre("desu");
-
-        System.out.print(aux.getCont() + aux.getNombre());
-         */
 
         try {
             password();
@@ -55,8 +50,9 @@ aux.setNombre("desu");
 
     private static void password(){
         String user;
+         Scanner sc1 = new Scanner(System.in);
         System.out.println("Usuario:");
-        user = sc.nextLine();
+        user = sc1.nextLine();
         System.out.println("Contraseña:");
         Console console = System.console();
         char[] password = console.readPassword();
@@ -66,19 +62,30 @@ aux.setNombre("desu");
         }
         if (user.equals("admin") && pass.equals("admin")){
             Menu();
+        }if(user.equals(users[0].getNombre())&&pass.equals(users[0].getCont())){
+              menu_reporte();
+        }if(user.equals(users[1].getNombre())&&pass.equals(users[1].getCont())){
+              menu_reporte();
+        }if(user.equals(users[2].getNombre())&&pass.equals(users[2].getCont())){
+              menu_reporte();
+        }if(user.equals(users[3].getNombre())&&pass.equals(users[3].getCont())){
+              menu_reporte();
+        }if(user.equals(users[4].getNombre())&&pass.equals(users[4].getCont())){
+              menu_reporte();
         }else{
-            System.out.println("El usaurio o la contraseña estan mal escritos");
+            System.out.println("El usuario o la contraseña estan mal escritos");
             System.out.println("Porfavor vulve a ingresarlos \n");
             password();
         }
     }
 
     private static void Menu() {
+        Scanner sc20 = new Scanner(System.in);
         boolean menu = true;
         do {
             try {
                 int opc;
-                System.out.println(ANSI_YELLOW +"Menu principal"
+                System.out.println(ANSI_YELLOW + " " +"Menu principal"
                         + "\n1)Cargar Alumnos"
                         + "\n2)Cargar Profesores"
                         + "\n3)Cargar Cursos"
@@ -86,7 +93,7 @@ aux.setNombre("desu");
                         + "\n5)Asignar profesores"
                         + "\n6)Cargar Notas"
                         + "\n7)Crear usuario"
-                        + "\n8)Cerrar Sesión"+ANSI_RESET);
+                        + "\n8)Cerrar Sesión"+ " " +ANSI_RESET);
                 switch (opc = sc.nextInt()) {
                     case 1:
                         try {
@@ -114,12 +121,12 @@ aux.setNombre("desu");
                         int pos;
                         System.out.println("Seleccione el espacio de memoria donde el usuario será creado"
                                 + "\nSolo existen 5 espacios para usuarios (Exceptuando el admin)");
-                        pos = sc.nextInt();
+                        pos = sc20.nextInt();
                         users[pos] = crear_usuario();
-                        System.out.println("Usuario: " + users[pos].getNombre() + "/" + users[pos].getCont());
+                        //System.out.println("Usuario: " + users[pos].getNombre() + "/" + users[pos].getCont());
                         break;
                     case 8:
-                        Nueva_sesion();
+                        password();
                         break;
                     default:
                         System.out.println("Seleccione una de las opciones");
@@ -138,50 +145,20 @@ aux.setNombre("desu");
         String nombre;
         System.out.print("Ingresé el nombre: ");
         nombre = sc1.nextLine();
-        String contrase;
+
         System.out.print("Ingresé la contraseña: ");
-        contrase = sc2.nextLine();
+        Console console = System.console();
+        char[] password = console.readPassword();
+        String pass = "";
+        for (int a = 0; a < password.length; a++) {
+            pass += String.valueOf(password[a]);;
+        }
 
         aux.setNombre(nombre);
-        aux.setCont(contrase);
+        aux.setCont(pass);
 
         //System.out.println(aux.getNombre()+aux.getCont());
         return aux;
-    }
-
-    private static void Nueva_sesion() {
-        Scanner sc1 = new Scanner(System.in);
-        Scanner sc2 = new Scanner(System.in);
-        Console c = System.console();
-        String user;
-        System.out.println("Usuario:");
-        user = sc1.nextLine();
-        String pass;
-        System.out.println("Contraseña:");
-        pass = sc2.nextLine();
-        try {
-            if (user.equals("admin") && pass.equals("admin")) {
-                Menu();
-            }
-            if (user.equals(users[0].getNombre()) && pass.equals(users[0].getCont())) {
-                menu_reporte();
-            }
-            if (user.equals(users[1].getNombre()) && pass.equals(users[1].getCont())) {
-                menu_reporte();
-            }
-            if (user.equals(users[2].getNombre()) && pass.equals(users[2].getCont())) {
-                menu_reporte();
-            }
-            if (user.equals(users[3].getNombre()) && pass.equals(users[3].getCont())) {
-                menu_reporte();
-            }
-            if (user.equals(users[4].getNombre()) && pass.equals(users[4].getCont())) {
-                menu_reporte();
-            }
-        } catch (Exception e) {
-            System.out.println("Usuario no valido");
-            System.exit(0);
-        }
     }
 
     //Todabía es muy primitivo... cargar alumnos
@@ -191,7 +168,7 @@ aux.setNombre("desu");
         int id, carnet;
         String nombre, cumple, genero;
         //la dirección del archivo
-        //https://www.youtube.com/watch?v=zKDmzKaAQro
+        
         Alumno[] aux = null;
 
         try {
@@ -231,25 +208,25 @@ aux.setNombre("desu");
         }
         return aux;
     }
-    
-    //menu de reportes
-    private static void menu_reporte(){
-    boolean menu = true;
 
-    Scanner sc1 = new Scanner(System.in);
-    int opc;
-    while(menu = true){
-        System.out.println(ANSI_RED+"Menu de reportes"
-                + "\n1)Generar Reportes"
-                + "\n2)Cerrar Sesión" +ANSI_RESET);
-        
-        try{
-        switch(opc = sc1.nextInt()){
-            case 1:
-                sub_menureporte();
+    //menu de reportes
+    private static void menu_reporte() {
+        boolean menu = true;
+
+        Scanner sc1 = new Scanner(System.in);
+        int opc;
+        while (menu = true) {
+            System.out.println(ANSI_RED + "Menu de reportes"
+                    + "\n1)Generar Reportes"
+                    + "\n2)Cerrar Sesión" + ANSI_RESET);
+
+            try {
+                switch (opc = sc1.nextInt()) {
+                    case 1:
+                        sub_menureporte();
                 break;
             case 2:
-                Nueva_sesion();
+                password();
                 break;
             default:
                 System.out.println("Seleccione una opción");
@@ -261,7 +238,6 @@ aux.setNombre("desu");
         
     }
     }
-
 
     private static void sub_menureporte(){
         Scanner sc1 = new Scanner(System.in);
