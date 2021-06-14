@@ -38,25 +38,38 @@ static Curso[] cursos = new Curso[15];
 */
 
     public static void main(String[] args) {
-        Console c = System.console();
-        String user;
+
 /*Usuario aux = new Usuario();
 aux.setCont("Uno");
 aux.setNombre("desu");
 
         System.out.print(aux.getCont() + aux.getNombre());
          */
-        System.out.println("Usuario:");
-        user = sc.nextLine();
-        String pass;
-        System.out.println("Contraseña:");
-        pass = "admin";
+
         try {
-            if (user.equals("admin") && pass.equals("admin")) {
-                Menu();
-            }
+            password();
         } catch (Exception e) {
             System.out.println("Usuario no valido");
+        }
+    }
+
+    private static void password(){
+        String user;
+        System.out.println("Usuario:");
+        user = sc.nextLine();
+        System.out.println("Contraseña:");
+        Console console = System.console();
+        char[] password = console.readPassword();
+        String pass="";
+        for (int a=0;a<password.length;a++){
+            pass += String.valueOf(password[a]);;
+        }
+        if (user.equals("admin") && pass.equals("admin")){
+            Menu();
+        }else{
+            System.out.println("El usaurio o la contraseña estan mal escritos");
+            System.out.println("Porfavor vulve a ingresarlos \n");
+            password();
         }
     }
 
